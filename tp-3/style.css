@@ -1,1 +1,30 @@
+h1 {
+    text-align: center;
+}
+
+p {
+    font-family: serif;
+}
+
+#primer-parrafo {
+    background-color: #CEE;
+}
+
+#primer-parrafo em {
+    color: #933;
+}
+
+a {
+    outline: 1px solid #333;
+}
+
+p.fuente {
+    opacity: 1;
+    color: #000;
+}
+
+span.complicado {
+    font-weight: bold;
+    color: #C62;
+}
 
