@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Editor de Texto - DOM y JavaScript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container my-1 my-sm-2 my-md-4 my-lg-5">
+        <h1>Editor de Texto</h1>
+        <div class="card">
+            <div class="card-body">
+                <h2>Texto</h2>
+
+                <p class="texto" id="texto">Lionel Andrés Messi, conocido como Lionel Messi o simplemente Leo Messi, es un futbolista argentino considerado uno de los mejores de todos los tiempos. Nació el 24 de junio de 1987 en Rosario, Argentina.
+
+                    Messi comenzó su carrera en las divisiones juveniles del FC Barcelona, donde pronto destacó por su habilidad excepcional con el balón. Debutó en el primer equipo en 2004 y desde entonces ha ganado numerosos títulos y premios individuales.
+                    
+                    Entre los logros de Messi se encuentran seis premios Balón de Oro, múltiples títulos de La Liga, Champions League y Copas del Rey, así como récords de goles tanto a nivel de clubes como de selecciones.</p>
+
+                <hr class="hr">
+
+                <h2>Opciones de Formato</h2>
+                <div class="row">
+                    <div class="col-12 col-md-4 my-1">
+                        <button id="btn-negrita" class="btn d-block w-100 btn-primary" data-funcion="negrita">
+                            Bold (Negrita)
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-4 my-1">
+                        <button id="btn-cursiva" class="btn d-block w-100 btn-primary" data-funcion="cursiva">
+                            Italics (Cursiva)
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-4 my-1">
+                        <button id="btn-subrayado" class="btn d-block w-100 btn-primary" data-funcion="subrayado">
+                            Underline (Subrayado)
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-6 my-1">
+                        <input id="input-texto" type="text" class="form-control" placeholder="Nuevo texto">
+                    </div>
+                    <div class="col-12 col-md-6 my-1">
+                        <button id="btn-cambiar-texto" class="btn d-block w-100 btn-primary">
+                            Cambiar Texto
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-6 my-1">
+                        <label for="select-tamaño" class="form-label">Tamaño del texto:</label>
+                        <select id="select-tamaño" class="form-select">
+                            <option value="12">Pequeño</option>
+                            <option value="16">Normal</option>
+                            <option value="20">Grande</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function funcionNegrita() {
+            const textoElemento = document.getElementById('texto');
+            textoElemento.style.fontWeight = textoElemento.style.fontWeight === 'bold' ? 'normal' : 'bold';
+        }
+
+        function funcionCursiva() {
+            const textoElemento = document.getElementById('texto');
+            textoElemento.style.fontStyle = textoElemento.style.fontStyle === 'italic' ? 'normal' : 'italic';
+        }
+
+        function funcionSubrayado() {
+            const textoElemento = document.getElementById('texto');
+            textoElemento.style.textDecoration = textoElemento.style.textDecoration === 'underline' ? 'none' : 'underline';
+        }
+
+        function cambiarTexto() {
+            const nuevoTexto = document.getElementById('input-texto').value;
+            document.getElementById('texto').innerText = nuevoTexto;
+        }
+
+        function cambiarTamañoTexto() {
+            const nuevoTamaño = document.getElementById('select-tamaño').value;
+            document.getElementById('texto').style.fontSize = `${nuevoTamaño}px`;
+        }
+
+        function handlerBoton(e) {
+            const funcionBoton = e.target.dataset.funcion;
+            switch (funcionBoton) {
+                case 'negrita':
+                    funcionNegrita();
+                    break;
+                case 'cursiva':
+                    funcionCursiva();
+                    break;
+                case 'subrayado':
+                    funcionSubrayado();
+                    break;
+            }
+        }
+
+        document.querySelectorAll('button.btn').forEach(e => e.addEventListener('click', handlerBoton));
+        document.getElementById('btn-cambiar-texto').addEventListener('click', cambiarTexto);
+        document.getElementById('select-tamaño').addEventListener('change', cambiarTamañoTexto);
+    </script>
+</body>
+</html>

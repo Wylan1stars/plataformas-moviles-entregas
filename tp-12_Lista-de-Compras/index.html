@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Compras - DOM y JavaScript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        .producto-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        .producto-item button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-1 my-sm-2 my-md-4 my-lg-5">
+        <h1>Lista de Compras</h1>
+        <div class="card">
+            <div class="card-body">
+                <h2>Listado de Productos</h2>
+                
+                <ul id="lista-productos" class="list-unstyled">
+                    <li class="producto-item">
+                        <span>Pan</span>
+                        <button class="btn btn-danger btn-sm eliminar">Eliminar</button>
+                    </li>
+                </ul>
+
+                <hr class="hr">
+
+                <h2>Agregar Producto</h2>
+                <form id="form-producto">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Nombre del Producto">
+                        <button class="btn btn-primary" type="submit">Agregar Producto</button>
+                    </div>
+                </form>
+
+                <button id="limpiar-lista" class="btn btn-warning mt-2">Limpiar Lista</button>
+                <button id="ordenar-lista" class="btn btn-secondary mt-2">Ordenar Lista</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        // Función para agregar un producto
+        function agregarProducto(nombreProducto) {
+            if (!nombreProducto) return; // No hacer nada si el nombre está vacío
+            const listaProductos = document.getElementById('lista-productos');
+            const nuevoProducto = document.createElement('li');
+            nuevoProducto.className = 'producto-item';
+            nuevoProducto.innerHTML = `<span>${nombreProducto}</span><button class="btn btn-danger btn-sm eliminar">Eliminar</button>`;
+            listaProductos.appendChild(nuevoProducto);
+            actualizarBotonesEliminar();
+        }
+
+        // Manejar el envío del formulario
+        function handlerFormulario(e) {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const nombreProducto = input.value.trim();
+            input.value = "";
+            agregarProducto(nombreProducto);
+        }
+
+        // Función para limpiar la lista
+        function limpiarLista() {
+            document.getElementById('lista-productos').innerHTML = '';
+        }
+
+        // Función para ordenar la lista alfabéticamente
+        function ordenarLista() {
+            const listaProductos = document.getElementById('lista-productos');
+            const productos = Array.from(listaProductos.children);
+            productos.sort((a, b) => a.textContent.localeCompare(b.textContent));
+            listaProductos.innerHTML = '';
+            productos.forEach(producto => listaProductos.appendChild(producto));
+        }
+
+        // Función para eliminar un producto individualmente
+        function eliminarProducto(e) {
+            if (e.target.classList.contains('eliminar')) {
+                e.target.parentElement.remove();
+            }
+        }
+
+        // Actualizar los botones de eliminar en cada producto
+        function actualizarBotonesEliminar() {
+            const botonesEliminar = document.querySelectorAll('.eliminar');
+            botonesEliminar.forEach(boton => boton.removeEventListener('click', eliminarProducto));
+            botonesEliminar.forEach(boton => boton.addEventListener('click', eliminarProducto));
+        }
+
+        document.getElementById('form-producto').addEventListener('submit', handlerFormulario);
+        document.getElementById('limpiar-lista').addEventListener('click', limpiarLista);
+        document.getElementById('ordenar-lista').addEventListener('click', ordenarLista);
+        actualizarBotonesEliminar(); // Inicializar los botones de eliminar para los productos existentes
+    </script>
+</body>
+</html>
